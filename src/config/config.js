@@ -19,9 +19,11 @@ module.exports = {
     uri: process.env.MONGODB_URI || 'mongodb://localhost:27017/pricepilot'
   },
   cors: {
-    origin: process.env.NODE_ENV === 'production' 
-      ? ['https://pricepilot.com', 'https://www.pricepilot.com'] 
-      : ['http://localhost:3000', 'http://127.0.0.1:3000']
+    origin: process.env.CORS_ORIGINS
+      ? process.env.CORS_ORIGINS.split(',').map(origin => origin.trim())
+      : process.env.NODE_ENV === 'production'
+        ? ['https://pricepilot.com', 'https://www.pricepilot.com']
+        : ['http://localhost:3000', 'http://127.0.0.1:3000']
   },
   cache: {
     memoryTTL: 60 * 30, // 30 minutes
